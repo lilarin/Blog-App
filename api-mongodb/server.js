@@ -1,10 +1,14 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const limiter = require('../src/middleware/requestLimit.js')
 
 // Підключення до бази даних
 require('./db');
 app.use(express.json());
+
+// Використання rate limiter middleware
+app.use(limiter);
 
 // Додавання CORS middleware
 app.use(cors());
