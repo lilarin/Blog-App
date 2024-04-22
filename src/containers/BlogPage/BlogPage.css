@@ -1,0 +1,74 @@
+.subscribe {
+  margin-top: 2%;
+  margin-bottom: 1%;
+  text-align: center;
+}
+
+.posts {
+  color: rgb(30, 20, 44);
+  text-align: justify;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.subscribe button {
+  padding: 4px 20px;
+  font-size: 16px;
+  background-color: #393939;
+  color: white;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition-property: background-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+}
+
+.subscribe button:hover {
+  background-color: #656161; 
+}
+
+.post {
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 1%;
+  padding-top: 1%;
+  margin-bottom: 1%;
+  border-radius: 10px;
+  outline: 2px solid transparent; 
+  transition: outline 0.4s ease;
+}
+
+.post:hover {
+  outline: 2px solid #333;
+}
+
+.post.active {
+  outline: 2px solid #333;
+}
+
+.post.active p {
+  animation: fadeInText 2s ease forwards;
+}
+
+.search-bar {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-bar input {
+  margin-right: 10px;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-bar select {
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
