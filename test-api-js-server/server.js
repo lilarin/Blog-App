@@ -47,24 +47,24 @@ const posts = [
 
 // Маршрути для операцій CRUD
 app.get('/posts', (req, res) => {
-    res.json(posts);
+    return res.json(posts);
 });
 
 app.get('/posts/:id', (req, res) => {
     const postId = parseInt(req.params.id);
     const post = posts.find(post => post.id === postId);
     if (post) {
-        res.status(200).json(post);
+        return res.status(200).json(post);
     } else {
-        res.status(404).json({ error: 'Post not found' });
+        return res.status(404).json({ error: 'Post not found' });
     }
 });
 
 app.post('/posts', (req, res) => {
-    const postTitle = req.query.title;
-    const postContent = req.query.content;
-    const postAuthor = req.query.author;
-    const postDate = req.query.date;
+    const postTitle = req.body.title;
+    const postContent = req.body.content;
+    const postAuthor = req.body.author;
+    const postDate = req.body.date;
 
     if (postTitle && postContent && postAuthor && postDate) {
         const maxId = posts.reduce((max, post) => Math.max(max, post.id), 0);
@@ -76,19 +76,19 @@ app.post('/posts', (req, res) => {
             date: postDate
         };
         posts.push(newPost);
-        res.status(201).json(newPost);
+        return res.status(201).json(newPost);
     } else {
-        return res.status(400).json({ error: req.headers });
+        return res.status(400).json({ error: 'Incorrect fields found' });
     }
 });
 
 app.put('/posts', (req, res) => {
-    const postTitle = req.query.title;
-    const postContent = req.query.content;
-    const postAuthor = req.query.author;
-    const postDate = req.query.date;
+    const postTitle = req.body.title;
+    const postContent = req.body.content;
+    const postAuthor = req.body.author;
+    const postDate = req.body.date;
 
-    const postId = req.query.id;
+    const postId = req.body.id;
     const index = posts.findIndex(post => post.id === parseInt(postId));
 
     if (index !== -1) {
@@ -96,18 +96,9 @@ app.put('/posts', (req, res) => {
         if (postContent) posts[index].content = postContent;
         if (postAuthor) posts[index].author = postAuthor;
         if (postDate) posts[index].date = postDate;
-        res.status(200).json(posts[index]);
+        return res.status(200).json(posts[index]);
     } else {
-        const maxId = posts.reduce((max, post) => Math.max(max, post.id), 0);
-        const newPost = {
-            id: maxId + 1,
-            title: postTitle,
-            content: postContent,
-            author: postAuthor,
-            date: postDate
-        };
-        posts.push(newPost);
-        res.status(201).json(newPost);
+        return res.status(404).json({ error: 'Post not found' });
     }
 });
 
@@ -115,29 +106,11 @@ app.delete('/posts/:id', (req, res) => {
     const postId = parseInt(req.params.id);
     const index = posts.findIndex(post => post.id === postId);
     if (index !== -1) {
+        const deletedPost = { ...posts[index] }; 
         posts.splice(index, 1);
-        res.status(200).send();
+        return res.status(200).json(deletedPost);
     } else {
-        res.status(404).json({ error: 'Post not found' });
-    }
-});
-
-app.put('/posts/:id', (req, res) => {
-    const postId = parseInt(req.params.id);
-    const { title, content, author, date } = req.body;
-    const index = posts.findIndex(post => post.id === postId);
-    
-    if (index !== -1) {
-        posts[index] = {
-            id: postId,
-            title: title || posts[index].title,
-            content: content || posts[index].content,
-            author: author || posts[index].author,
-            date: date || posts[index].date
-        };
-        res.status(200).json(posts[index]);
-    } else {
-        res.status(404).json({ error: 'Post not found' });
+        return res.status(404).json({ error: 'Post not found' });
     }
 });
 
@@ -145,8 +118,7 @@ app.get('/filter/posts', (req, res) => {
     const { searchType, searchTerm } = req.query;
 
     if (!searchTerm) {
-        res.json(posts);
-        return;
+        return res.json(posts);
     }
 
     let filteredPosts = posts.filter(post => {
@@ -157,10 +129,8 @@ app.get('/filter/posts', (req, res) => {
         } else if (searchType === 'author') {
             return post.author && post.author.toLowerCase().includes(searchTerm.toLowerCase());
         }
-        return true;
     });
-
-    res.json(filteredPosts);
+    return res.json(filteredPosts);
 });
 
 

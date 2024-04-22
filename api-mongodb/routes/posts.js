@@ -1,17 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { getPosts, createPost, getPost, deletePost } = require('../controllers/post.js');
+const { getPosts, filterPosts ,createPost, modifyPost, getPost, deletePost } = require('../controllers/post.js');
 
-// Отримання всіх авто
+// Отримання всіх постів
 router.get('/posts', getPosts);
 
-// Створення нового авто
+// Отримання відфільтрованих постів
+router.get('/filter/posts', filterPosts);
+
+// Створення нового посту
 router.post('/posts', createPost);
 
-// Отримання одного авто
+// Редагування, або створення нового посту
+router.put('/posts', modifyPost);
+
+// Отримання одного посту за ідентифікатором
 router.get('/posts/:id', getPost);
 
-// Видалення одного авто
+// Видалення одного посту
 router.delete('/posts/:id', deletePost);
 
 module.exports = router;

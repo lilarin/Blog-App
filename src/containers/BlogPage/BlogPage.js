@@ -9,13 +9,12 @@ export const BlogContent = () => {
     const [searchType, setSearchType] = useState('content');
 
     useEffect(() => {
-        axios.get('http://localhost:3003/api/posts', {})
-        /*axios.get('http://localhost:3002/filter/posts', {
+        axios.get('http://localhost:3003/api/filter/posts', {
             params: {
                 searchType: searchType,
                 searchTerm: searchTerm
             }
-        })*/
+        })
         .then(response => {
             setPosts(response.data);
         })
