@@ -44,12 +44,7 @@ export const BlogContent = () => {
         }
     };
 
-    const handleAnimationEnd = () => {
-        setError(null);
-        setShowErrorPopup(false);
-      };
-
-    /* const filteredPosts = posts.filter(post => {
+    const filteredPosts = posts.filter(post => {
         if (searchType === 'content') {
             return post.content.toLowerCase().includes(searchTerm.toLowerCase());
         } else if (searchType === 'title') {
@@ -58,7 +53,7 @@ export const BlogContent = () => {
             return post.author.toLowerCase().includes(searchTerm.toLowerCase());
         }
         return true;
-    }); */
+    });
 
     return (
         <>
@@ -85,7 +80,8 @@ export const BlogContent = () => {
             </div>
 
             <div className="posts">
-                {posts.map(post => (
+                {//posts.map(post => (
+                    filteredPosts.map(post => (
                     <div key={post.id} className={`post ${openPost === post.id ? 'active' : ''}`} onClick={() => handlePostClick(post.id)}>
                         <h2>{post.title}</h2>
                         {openPost !== post.id && (
