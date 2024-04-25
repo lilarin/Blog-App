@@ -24,3 +24,16 @@ app.use('/api', postsRouter);
 // Запуск сервера
 const PORT = process.env.PORT || 3003;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Обробка події закриття сервера
+process.on('SIGINT', () => {
+    console.log('Closing server...');
+    server.close(() => {
+        console.log('Server closed');
+        // Відключення від MongoDB
+        mongoose.disconnect(() => {
+            console.log('Disconnected from MongoDB');
+            process.exit(0);
+        });
+    });
+});
